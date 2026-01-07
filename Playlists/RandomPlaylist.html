@@ -2,23 +2,23 @@
 <html>
     <head>
         <title>WeLoveMusic - RandomPlaylist</title>
-        <link rel="stylesheet" href="http://127.0.0.1:5500/styles.css">
+        <link rel="stylesheet" href="https://itscapp.github.io/WeLoveMusic.github.io/styles.css">
     </head>
     <body>
         <div class="navigation" style="position:static">
             <div class="Home" style="width:20%; display:inline-flex">
                 <img src="/logo.png" alt="WeLoveMusic Logo" style="width: 25%; height:auto;">
-                <h1><a href="http://127.0.0.1:5500/home.html" style="color: rgb(0, 187, 255);">WeLoveMusic</a></h1>
+                <h1><a href="https://itscapp.github.io/WeLoveMusic.github.io/home.html" style="color: rgb(0, 187, 255);">WeLoveMusic</a></h1>
             </div>
             <div class="Buttons" style="width:20%">
-                <h1><a href="/Playlists/MyPlaylist.html">Playlist</a></h1>
+                <h1><a href="https://itscapp.github.io/WeLoveMusic.github.io/Playlists/MyPlaylist.html">Playlist</a></h1>
             </div>
             <div class="Search" style="width:40%">
                 <input type="text" placeholder="Search.." style = "width: 80%; height: 40px;">
             </div>
             <div class="Account" style="width:20%; display:inline-flex; justify-content: flex-end;">
-                <h1 style="padding: 5px;"><a href="http://127.0.0.1:5500/Signup.html">Sign Up</a></h1>
-                <h1 style="padding: 5px;"><a href="http://127.0.0.1:5500/Login.html">Login</a></h1>
+                <h1 style="padding: 5px;"><a href="https://itscapp.github.io/WeLoveMusic.github.io/Signup.html">Sign Up</a></h1>
+                <h1 style="padding: 5px;"><a href="https://itscapp.github.io/WeLoveMusic.github.io/Login.html">Login</a></h1>
             </div>
         </div>
 
@@ -36,7 +36,7 @@
             
             <script>
                 // Load XML file using Fetch API
-                fetch('/Playlists/MyPlaylist.xml')
+                fetch('https://itscapp.github.io/WeLoveMusic.github.io/Playlists/MyPlaylist.xml')
                     .then(response => response.text())
                     .then(str => (new window.DOMParser()).parseFromString(str, "text/xml"))
                     .then(xml => {
@@ -71,7 +71,7 @@
                                         break;
                                     }
                                 }
-                                Artists += `<p style="height:50px; padding: 0px; margin: 0px;"><a href="/artists/${artistName}.html">${artistName}</a></p>`;
+                                Artists += `<p style="height:50px; padding: 0px; margin: 0px;"><a href="https://itscapp.github.io/WeLoveMusic.github.io/artists/${artistName}.html">${artistName}</a></p>`;
 
                                 // find and append album name for this song
                                 const albumId = songs[i].getElementsByTagName('Album')[0].textContent.trim();
@@ -85,7 +85,7 @@
                                     }
                                 }
                                 Albums += `<p style="height:50px; padding: 0px; margin: 0px;">${albumName}</p>`;
-                                thumbnails += `<p style = "height:50px; width:50px; padding: 0px; margin: 0px;"><img src="/images/${albumName}.png" alt="${albumName}" height=50px; width=50px;></p>`
+                                thumbnails += `<p style = "height:50px; width:50px; padding: 0px; margin: 0px;"><img src="https://itscapp.github.io/WeLoveMusic.github.io/images/${albumName}.png" alt="${albumName}" height=50px; width=50px;></p>`
 
                                 /////////////////////////////////
                             }
