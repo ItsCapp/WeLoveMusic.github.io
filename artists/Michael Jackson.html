@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>WeLoveMusic - Michael Jackson</title>
+        <link rel="stylesheet" href="http://127.0.0.1:5500/styles.css">
+    </head>
+    <body>
+        <div class="navigation" style="position:static">
+            <div class="Home" style="width:20%; display:inline-flex">
+                <img src="/logo.png" alt="WeLoveMusic Logo" style="width: 25%; height:auto;">
+                <h1><a href="http://127.0.0.1:5500/home.html" style="color: rgb(0, 187, 255);">WeLoveMusic</a></h1>
+            </div>
+            <div class="Buttons" style="width:20%">
+                <h1><a href="/Playlists/MyPlaylist.html">Playlist</a></h1>
+            </div>
+            <div class="Search" style="width:40%">
+                <input type="text" placeholder="Search.." style = "width: 80%; height: 40px;">
+            </div>
+            <div class="Account" style="width:20%; display:inline-flex; justify-content: flex-end;">
+                <h1 style="padding: 5px;"><a href="http://127.0.0.1:5500/Signup.html">Sign Up</a></h1>
+                <h1 style="padding: 5px;"><a href="http://127.0.0.1:5500/Login.html">Login</a></h1>
+            </div>
+        </div>
+
+        <div class="artist-info" style="height: 530px;">
+            <img src="/artists/Michael Jackson Banner.png" style ="position:initial; width:100%; height: auto;" alt="Michael Jackson">
+        </div>
+
+        <div class="title" style="width:50%; display:flex; align-items: center; padding-left: 10px;">
+            <img src="/artists/Michael Jackson PFP.png" style="width:200px; height:200px;">
+            <h1 style="color:white; -webkit-text-stroke-width: 2px; -webkit-text-stroke-color: rgba(0, 0, 0, 0.75); font-size: 50px">Michael Jackson</h1>
+        </div>
+        <div class="categories" style="padding-left: 10px; padding-right: 10px;">
+            <div id="output" style="color:white; display: flex;">
+                <div id="Thumbnails" style="color:white; width: 5%; padding-top: 80px;"></div>
+                <div id="Song_Name" style="color:white; width: 20%; font-size: large"></div>
+                <div id="Length" style="color:white; width: 25%; font-size: large"></div>
+                <div id="Artist" style="color:white; width: 25%; font-size: large"></div>
+                <div id="Album" style="color:white; width: 25%; font-size: large"></div>
+            </div>
+        </div>
+
+        <script>
+                // Load XML file using Fetch API
+                fetch('/Playlists/MyPlaylist.xml')
+                    .then(response => response.text())
+                    .then(str => (new window.DOMParser()).parseFromString(str, "text/xml"))
+                    .then(xml => {
+                        // Example: Get all <item> elements
+                        const songs = xml.getElementsByTagName('Songs');
+                        const artists = xml.getElementsByTagName('Artists');
+                        const albums = xml.getElementsByTagName('Albums');
+                        let thumbnails = ``
+                        let songNames = `<h1 style="height: 50px;">Song Name</h1>`;
+                        let Lengths = `<h1 style="height: 50px;">Length</h1>`;
+                        let Artists = `<h1 style="height: 50px;">Artist</h1>`;
+                        let Albums = `<h1 style="height: 50px;">Album</h1>`;
+                        for (let i = 0; i < songs.length; i++) {
+                            /////////////////////////////////
+                            
+                            const artist = "Michael Jackson"
+
+                            // find and append artist name for this song
+                            const artistId = songs[i].getElementsByTagName('Artist')[0].textContent.trim();
+                            let artistName = '';
+                            for (let j = 0; j < artists.length; j++) {
+                                const ID = artists[j].getElementsByTagName('ID')[0];
+                                if (ID && ID.textContent.trim() === artistId) {
+                                    const ArtistName = artists[j].getElementsByTagName('Artist_Name')[0];
+                                    if (ArtistName) artistName = ArtistName.textContent;
+                                    break;
+                                }
+                            }
+                            
+                            if (artistName === artist){
+                                Artists += `<p style="height:50px; padding: 0px; margin: 0px;"><a href="/artists/${artistName}.html">${artistName}</a></p>`;
+
+                                // find and append album name for this song
+                                const albumId = songs[i].getElementsByTagName('Album')[0].textContent.trim();
+                                let albumName = '';
+                                for (let k = 0; k < albums.length; k++) {
+                                    const ID = albums[k].getElementsByTagName('ID')[0];
+                                    if (ID && ID.textContent.trim() === albumId) {
+                                        const AlbumName = albums[k].getElementsByTagName('Album_Name')[0];
+                                        if (AlbumName) albumName = AlbumName.textContent;
+                                        break;
+                                    }
+                                }
+                                Albums += `<p style="height:50px; padding: 0px; margin: 0px;">${albumName}</p>`;
+                                thumbnails += `<p style = "height:50px; width:50px; padding: 0px; margin: 0px;"><img src="/images/${albumName}.png" alt="${albumName}" height=50px; width=50px;></p>`
+                                songNames += `<p style="height:50px; padding: 0px; margin: 0px;">${songs[i].getElementsByTagName('Song_Name')[0].textContent}</p>`;
+                                Lengths += `<p style="height:50px; padding: 0px; margin: 0px;">${songs[i].getElementsByTagName('Length')[0].textContent}</p>`;
+                            }
+
+                            /////////////////////////////////
+                        }
+                        document.getElementById('Song_Name').innerHTML = songNames;
+                        document.getElementById('Length').innerHTML = Lengths;
+                        document.getElementById('Artist').innerHTML = Artists;
+                        document.getElementById('Album').innerHTML = Albums;
+                        document.getElementById('Thumbnails').innerHTML = thumbnails;
+                    })
+                    .catch(err => console.error('Error loading XML:', err));
+            </script>
+    </body>
+</html>
